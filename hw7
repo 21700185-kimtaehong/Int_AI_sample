@@ -1,0 +1,131 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNwvetg9n+/y3ku7fpr2k8s",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/21700185-kimtaehong/Int_AI_sample/blob/main/hw7\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "1VmmFNXh7BzY"
+      },
+      "outputs": [],
+      "source": [
+        "import numpy as np\n",
+        "import matplotlib.pyplot as plt\n",
+        "import pandas as pd\n",
+        "df = pd.read_excel('data_set_train.xlsx')"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df.shape\n",
+        "df.columns\n",
+        "df.describe()\n",
+        "df.info()"
+      ],
+      "metadata": {
+        "id": "eRl3HPpCE4iG"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df[df['Yongpae(용적율)'].isnull()].head()\n",
+        "df['Yongpae(용적률)']=df['Yongpae(용적률)'].replace(np.nan, df['Yongpae(용적률)'].mean()"
+      ],
+      "metadata": {
+        "id": "JUeXIkU6E6vX"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "df['dong(동)'].value_counts()\n",
+        "data1=df[['yyyyqrt(거래년도 분기별)','price(가격)','dong(동)']]\n",
+        "data1.head() # 원하는 column만 가져와 data1에 저장"
+      ],
+      "metadata": {
+        "id": "-pbuv7R-E-Px"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data2=data1.copy()\n",
+        "data2.columns=['yearqrt', 'price', 'dong'] #Column 이름 변경"
+      ],
+      "metadata": {
+        "id": "ku4B1al4FAWo"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data_gaepo=data2[data2['dong'] == '개포동']\n",
+        "data_gaepo.head()"
+      ],
+      "metadata": {
+        "id": "TjOTM8OJFGwY"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data_gaepo_time=data_gaepo.groupby('yearqrt').mean()\n",
+        "data_gaepo_time"
+      ],
+      "metadata": {
+        "id": "JS4gigVrFrHf"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "plt.figure(figsize=(60,30))\n",
+        "plt.plot(data_gaepo_time['price'])"
+      ],
+      "metadata": {
+        "id": "00TO4BEzFwDh"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
